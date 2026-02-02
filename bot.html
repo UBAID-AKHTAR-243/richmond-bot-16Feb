@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talk with Us - Chat Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height:550px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header */
+        .chat-header {
+            background: #007AFF;
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .chat-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chat-status {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #34C759;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Messages Container */
+        .messages-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Welcome Message */
+        .welcome-message {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .welcome-message h3 {
+            color: #007AFF;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .welcome-message p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Bot Message */
+        .bot-message {
+            align-self: flex-start;
+            max-width: 80%;
+        }
+
+        .bot-bubble {
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .bot-bubble:before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-right-color: white;
+            border-left: 0;
+            border-bottom: 0;
+            margin-bottom: 8px;
+        }
+
+        .bot-text {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .bot-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #007AFF;
+            font-size: 14px;
+        }
+
+        /* User Message */
+        .user-message {
+            align-self: flex-end;
+            max-width: 80%;
+        }
+
+        .user-bubble {
+            background: #007AFF;
+            color: white;
+            border-radius: 18px;
+            border-bottom-right-radius: 4px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+            position: relative;
+        }
+
+        .user-bubble:after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-left-color: #007AFF;
+            border-right: 0;
+            border-bottom: 0;
+            margin-bottom: 8px;
+        }
+
+        .user-text {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        /* Input Area */
+        .input-container {
+            background: white;
+            padding: 16px 20px;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 1px solid #e0e0e0;
+            border-radius: 22px;
+            padding: 12px 20px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #f8f8f8;
+        }
+
+        .message-input:focus {
+            border-color: #007AFF;
+            background: white;
+        }
+
+        .message-input::placeholder {
+            color: #999;
+        }
+
+        .send-btn, .voice-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .send-btn {
+            background: #007AFF;
+            color: white;
+        }
+
+        .send-btn:hover {
+            background: #0056cc;
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .voice-btn {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .voice-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .voice-btn.listening {
+            background: #ff3b30;
+            color: white;
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 59, 48, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #ccc;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        /* Voice Mode Indicator */
+        .voice-mode-indicator {
+            text-align: center;
+            padding: 12px;
+            background: #f8f8f8;
+            margin: 10px 20px;
+            border-radius: 12px;
+            color: #666;
+            font-size: 14px;
+            display: none;
+        }
+
+        .voice-mode-indicator.show {
+            display: block;
+        }
+
+        /* Time Stamps */
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        /* Scrollbar */
+        .messages-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .chat-container {
+                height: 100vh;
+                max-width: 100%;
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-left">
+                <div class="chat-title">Talk with College Assistant</div>
+                <div class="chat-status" id="status">
+                    <span class="status-dot"></span>
+                    Ready to assist
+                </div>
+            </div>
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Messages Container -->
+        <div class="messages-container" id="messagesContainer">
+            <!-- Welcome Message -->
+            <div class="welcome-message">
+                <h3>Hi! This is Shibli College  assistant.</h3>
+                <p>How can I help you today?</p>
+            </div>
+
+            <!-- Chat messages will be added here -->
+            <!-- Example messages (will be removed when sending first message) -->
+            <div class="bot-message" id="exampleBotMessage">
+                <div class="bot-bubble">
+                    <div class="bot-text">
+                        I'm here to help you with scheduling, appointments, and answering questions about Shibli College.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Mode Indicator -->
+        <div class="voice-mode-indicator" id="voiceIndicator">
+            Use voice or text to communicate
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <button class="voice-btn" id="voiceBtn" title="Voice Input">
+                <i class="fas fa-microphone"></i>
+            </button>
+            
+            <input type="text" 
+                   class="message-input" 
+                   id="messageInput" 
+                   placeholder="Type your message..."
+                   autocomplete="off">
+            
+            <button class="send-btn" id="sendBtn" title="Send Message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const voiceBtn = document.getElementById('voiceBtn');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const status = document.getElementById('status');
+        const voiceIndicator = document.getElementById('voiceIndicator');
+        const closeBtn = document.getElementById('closeBtn');
+        const exampleBotMessage = document.getElementById('exampleBotMessage');
+
+        // State
+        let isListening = false;
+        let isAIResponding = false;
+        let voiceRecognition = null;
+
+        // Initialize
+        function init() {
+            setupEventListeners();
+            setupVoiceRecognition();
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Send message on button click
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // Send message on Enter key
+            messageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Voice button click
+            voiceBtn.addEventListener('click', toggleVoiceInput);
+
+            // Close button
+            closeBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to close the chat?')) {
+                    // In a real app, this might close the widget
+                    alert('Chat closed. Refresh page to start again.');
+                }
+            });
+
+            // Focus input on load
+            messageInput.focus();
+        }
+
+        // Voice Recognition Setup
+        function setupVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                voiceRecognition = new SpeechRecognition();
+                
+                voiceRecognition.continuous = false;
+                voiceRecognition.interimResults = false;
+                voiceRecognition.lang = 'en-US';
+
+                voiceRecognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    messageInput.value = transcript;
+                    stopVoiceInput();
+                    sendMessage();
+                };
+
+                voiceRecognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    stopVoiceInput();
+                    updateStatus('Ready to assist');
+                    addMessage('bot', 'Sorry, I had trouble hearing you. Please try again or type your message.');
+                };
+
+                voiceRecognition.onend = () => {
+                    if (isListening) {
+                        stopVoiceInput();
+                    }
+                };
+            } else {
+                voiceBtn.style.display = 'none';
+                console.log('Speech recognition not supported');
+            }
+        }
+
+        // Toggle Voice Input
+        function toggleVoiceInput() {
+            if (!isListening) {
+                startVoiceInput();
+            } else {
+                stopVoiceInput();
+            }
+        }
+
+        // Start Voice Input
+        function startVoiceInput() {
+            if (!voiceRecognition) return;
+            
+            isListening = true;
+            voiceBtn.classList.add('listening');
+            voiceIndicator.classList.add('show');
+            updateStatus('Listening...');
+            
+            try {
+                voiceRecognition.start();
+            } catch (error) {
+                console.error('Failed to start voice recognition:', error);
+                stopVoiceInput();
+            }
+        }
+
+        // Stop Voice Input
+        function stopVoiceInput() {
+            isListening = false;
+            voiceBtn.classList.remove('listening');
+            voiceIndicator.classList.remove('show');
+            updateStatus('Ready to assist');
+            
+            if (voiceRecognition) {
+                try {
+                    voiceRecognition.stop();
+                } catch (error) {
+                    // Ignore errors when stopping
+                }
+            }
+        }
+
+        // Update Status
+        function updateStatus(text) {
+            status.innerHTML = `<span class="status-dot"></span> ${text}`;
+        }
+
+        // Send Message
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message || isAIResponding) return;
+
+            // Remove example message on first user message
+            if (exampleBotMessage) {
+                exampleBotMessage.remove();
+            }
+
+            // Add user message
+            addMessage('user', message);
+            messageInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            isAIResponding = true;
+            sendBtn.disabled = true;
+            messageInput.disabled = true;
+
+            // Simulate AI response delay
+            setTimeout(() => {
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                // Get AI response
+                const aiResponse = getAIResponse(message);
+                
+                // Add AI response
+                addMessage('bot', aiResponse);
+                
+                isAIResponding = false;
+                sendBtn.disabled = false;
+                messageInput.disabled = false;
+                messageInput.focus();
+            }, 1000 + Math.random() * 500);
+        }
+
+        // Add Message to Chat
+        function addMessage(sender, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${sender}-message`;
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            // Format message with proper line breaks
+            const formattedText = text.replace(/\n/g, '<br>');
+            
+            if (sender === 'bot') {
+                // Check if it's the welcome message
+                const isWelcome = text.includes('Shibli College') || text.includes('scheduling assistant');
+                
+                messageDiv.innerHTML = `
+                    <div class="bot-bubble">
+                        ${isWelcome ? '<div class="bot-name">Shibli College Assistant</div>' : ''}
+                        <div class="bot-text">${formattedText}</div>
+                        <div class="message-time">${time}</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="user-bubble">
+                        <div class="user-text">${formattedText}</div>
+                        <div class="message-time">${time}</div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // Show Typing Indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'bot-message';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="bot-bubble">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        // Remove Typing Indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Get AI Response (Based on screenshots)
+        function getAIResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Responses based on the screenshots
+            if (lowerMessage.includes('fee') || lowerMessage.includes('4th') || lowerMessage.includes('fourth') || lowerMessage.includes('class')) {
+                return "I'm sorry, but I don't have information about fees for 4th class. Shibli College offers higher education programs. If you have questions about our academic programs or want to book an appointment for admission counseling, I'd be happy to help!";
+            }
+            
+            if (lowerMessage.includes('lunch') || lowerMessage.includes('lunchtime') || lowerMessage.includes('lunch time')) {
+                return "We're open from 8 AM to 6 PM, we don't have a specific lunchtime. Would you like to book an appointment or visit during those hours?";
+            }
+            
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return "Hello! This is Shibli College scheduling assistant. How can I help you today?";
+            }
+            
+            if (lowerMessage.includes('appointment') || lowerMessage.includes('book') || lowerMessage.includes('schedule')) {
+                return "I can help you schedule an appointment. Please provide your preferred date and time, and I'll check availability for you.";
+            }
+            
+            if (lowerMessage.includes('admission') || lowerMessage.includes('apply') || lowerMessage.includes('enroll')) {
+                return "For admission inquiries, I recommend visiting our admissions office or booking an appointment with a counselor. Would you like me to help you schedule one?";
+            }
+            
+            if (lowerMessage.includes('time') || lowerMessage.includes('open') || lowerMessage.includes('close')) {
+                return "Shibli College is open Monday to Friday from 8:00 AM to 6:00 PM, and Saturday from 9:00 AM to 1:00 PM. We're closed on Sundays.";
+            }
+            
+            if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email')) {
+                return "You can contact Shibli College at:\n• Phone: (555) 123-4567\n• Email: info@shiblicollege.edu\n• Address: 123 Education Street, Knowledge City";
+            }
+            
+            if (lowerMessage.includes('program') || lowerMessage.includes('course') || lowerMessage.includes('degree')) {
+                return "Shibli College offers various undergraduate and graduate programs in Arts, Sciences, and Professional Studies. Which field are you interested in?";
+            }
+            
+            if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+                return "You're welcome! Is there anything else I can help you with today?";
+            }
+            
+            // Default responses
+            const defaultResponses = [
+                "I understand you're asking about that. Could you provide more details so I can assist you better?",
+                "I can help with scheduling appointments, providing college information, or answering general queries about Shibli College. What specifically would you like to know?",
+                "I'm here to assist you with Shibli College related inquiries. Could you please rephrase your question?",
+                "That's a good question. Let me connect you with the appropriate department. Would you like me to schedule an appointment for you?"
+            ];
+            
+            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+
+        // Scroll to Bottom
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Initialize the chat
+        init();
+    </script>
+     <script src="static/api-integration.js"></script>
+</body>
+</html>

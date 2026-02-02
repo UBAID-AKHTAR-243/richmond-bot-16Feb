@@ -1,0 +1,28 @@
+# Core Framework
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.4.0
+pydantic-settings>=2.1.0
+
+# LLM & Embeddings
+transformers>=4.36.0
+torch>=2.0.0
+accelerate>=0.25.0
+sentence-transformers>=2.2.2
+
+# Vector Store
+faiss-cpu>=1.7.4  # Use faiss-gpu if you have CUDA
+
+# Voice Processing
+openai-whisper>=20231117  # Or a newer stable version
+coqui-tts>=0.22.0  # Coqui TTS
+
+# Utilities
+python-multipart>=0.0.6
+soundfile>=0.12.1
+numpy==2.3.5
+scipy>=1.11.4
+python-dotenv>=1.0.0
+langcodes>=3.2.0
+pip==26.0
+
