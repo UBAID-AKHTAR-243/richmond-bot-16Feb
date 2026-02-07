@@ -1,28 +1,37 @@
-# Core Framework
-fastapi>=0.104.0
-uvicorn>=0.24.0
-pydantic>=2.4.0
-pydantic-settings>=2.1.0
+#   command to create environment          # python -m venv myenv
+#   command to activate environment        # myenv/Scripts/activate
+#   command to deactivate environment      # deactivate
+
+
+# Core Frameworks
+pip               # python -m pip install --upgrade pip
+fastapi>=0.104.0           # pip install fastapi
+uvicorn>=0.24.0            # pip install uvicorn
+pydantic>=2.4.0            # pip install pydantic>=2.4.0
+pydantic-settings>=2.1.0   #  pip install pydantic-settings>=2.1.0
 
 # LLM & Embeddings
-transformers>=4.36.0
-torch>=2.0.0
-accelerate>=0.25.0
-sentence-transformers>=2.2.2
+transformers>=4.36.0        # pip install transformers>=4.36.0
+torch               # pip install torch torchvision torchaudio
+accelerate>=0.25.0          # pip install accelerate>=0.25.0
+sentence-transformers>=2.2.2     # pip install sentence-transformers>=2.2.2
 
 # Vector Store
-faiss-cpu>=1.7.4  # Use faiss-gpu if you have CUDA
+faiss-cpu             #pip install faiss-cpu>=1.7.4 # Use faiss-gpu if you have CUDA
 
 # Voice Processing
-openai-whisper>=20231117  # Or a newer stable version
-coqui-tts>=0.22.0  # Coqui TTS
-
+openai-whisper    # pip install -U openai-whisper  # Or a newer stable version
+coqui-tts>=0.22.0            # pip install coqui-tts>=0.22.0
 # Utilities
-python-multipart>=0.0.6
-soundfile>=0.12.1
-numpy==2.3.5
-scipy>=1.11.4
-python-dotenv>=1.0.0
-langcodes>=3.2.0
-pip==26.0
+python-multipart>=0.0.6      # pip install python-multipart>=0.0.6
+soundfile>=0.12.1            # pip install soundfile>=0.12.1
+numpy>=2.2.6                 # pip install numpy==2.3.5
+scipy>=1.11.4                # pip install scipy>=1.11.4
+python-dotenv>=1.0.0         # pip install python-dotenv>=1.0.0
+langcodes            # pip install langcodes
+fastapi              # pip install fastapi
+faiss-cpu>=1.7.4          #   pip install faiss-cpu>=1.7..4
+sentence_transformers
+TTS                #  pip install TTS      # pip cache purge # if facing problem to install
+
 
