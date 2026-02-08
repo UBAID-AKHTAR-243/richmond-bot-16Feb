@@ -17,7 +17,7 @@ accelerate>=0.25.0          # pip install accelerate>=0.25.0
 sentence-transformers>=2.2.2     # pip install sentence-transformers>=2.2.2
 
 # Vector Store
-faiss-cpu             #pip install faiss-cpu>=1.7.4 # Use faiss-gpu if you have CUDA
+faiss-cpu==1.7.4             #    pip install faiss-cpu==1.7.4          # Use faiss-gpu if you have CUDA
 
 # Voice Processing
 openai-whisper    # pip install -U openai-whisper  # Or a newer stable version
@@ -32,6 +32,6 @@ langcodes            # pip install langcodes
 fastapi              # pip install fastapi
 faiss-cpu>=1.7.4          #   pip install faiss-cpu>=1.7..4
 sentence_transformers
-TTS                #  pip install TTS      # pip cache purge # if facing problem to install
+TTS                #  pip install TTS      # pip cache purge # if still facing problem to install ,--install microsoft vs c++ builds tools.
 
 

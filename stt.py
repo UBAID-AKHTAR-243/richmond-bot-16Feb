@@ -5,7 +5,6 @@ import langcodes
 import logging
 import asyncio
 import threading
-from pathlib import Path
 from fastapi import UploadFile
 import whisper
 # Configure logging
@@ -60,7 +59,7 @@ async def transcribe(audio_file: UploadFile) -> dict:
     except Exception as e:
         logger.error(f"STT transcription failed: {e}")
         return {
-            "text": "me",
+            "text": "",
             "language_code": "error",
             "language_name": "Error",
             "error": str(e)

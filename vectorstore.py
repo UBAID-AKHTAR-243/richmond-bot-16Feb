@@ -3,7 +3,7 @@ import json
 import logging
 from typing import List, Dict, Any
 import numpy as np
-import faissdeactivate
+import faiss
 from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
