@@ -34,5 +34,5 @@ faiss-cpu>=1.7.4          #   pip install faiss-cpu>=1.7..4
 sentence_transformers
 TTS                #  pip install TTS      # pip cache purge # if still facing problem to install ,--install microsoft vs c++ builds tools.
 # to check version of coqui-tt  #    pip list | findstr -i tts   # All installed packages with versions
-
+langcodes         # pip install langcodes    # to check version    pip list | Select-String langcodes
 
