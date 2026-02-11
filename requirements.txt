@@ -1,7 +1,8 @@
 #   command to create environment          # python -m venv myenv
 #   command to activate environment        # myenv/Scripts/activate
 #   command to deactivate environment      # deactivate
-
+#   command to install requirements.txt    # pip install -r requirements.txt
+#   command to uninstall requirements.txt  # Get-Content requirements.txt | % { pip uninstall -y ($_ -split '[=<>!~]')[0] }
 
 # Core Frameworks
 pip               # python -m pip install --upgrade pip
@@ -21,7 +22,6 @@ faiss-cpu==1.7.4             #    pip install faiss-cpu==1.7.4          # Use fa
 
 # Voice Processing
 openai-whisper    # pip install -U openai-whisper  # Or a newer stable version
-coqui-tts>=0.22.0            # pip install coqui-tts>=0.22.0
 # Utilities
 python-multipart>=0.0.6      # pip install python-multipart>=0.0.6
 soundfile>=0.12.1            # pip install soundfile>=0.12.1
@@ -33,5 +33,6 @@ fastapi              # pip install fastapi
 faiss-cpu>=1.7.4          #   pip install faiss-cpu>=1.7..4
 sentence_transformers
 TTS                #  pip install TTS      # pip cache purge # if still facing problem to install ,--install microsoft vs c++ builds tools.
+# to check version of coqui-tt  #    pip list | findstr -i tts   # All installed packages with versions
 
 
