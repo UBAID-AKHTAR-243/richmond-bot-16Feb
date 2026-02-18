@@ -3,6 +3,9 @@ You are a helpful assistant. Use the following context to answer the user's ques
 Context:
 $context
 
+Chat history:
+$history
+
 Question: $question
 
 Answer:

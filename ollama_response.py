@@ -9,7 +9,8 @@ Features:
 - Configurable via command-line arguments and environment variables.
 - Comprehensive logging and error handling.
 """
-
+# from chunk import chunk_sentences
+# from embeddings import main
 import os
 import sys
 import json
@@ -24,7 +25,7 @@ from requests.exceptions import RequestException
 
 # Add parent directory to path to import local modules
 sys.path.insert(0, str(Path(__file__).parent))
-from augmenting-prompt import PromptBuilder, get_default_builder, load_context_from_file
+from augmenting_prompt import PromptBuilder, get_default_builder, load_context_from_file
 from retrieve import retrieve_chunks
 
 # Configure logging
@@ -36,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 # Default settings
 DEFAULT_OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-DEFAULT_MODEL = os.environ.get("OLLAMA_MODEL", "deepseek-r1")
+DEFAULT_MODEL = os.environ.get("OLLAMA_MODEL", "deepseek-r1:1.5b")
 DEFAULT_MAX_TOKENS = 500
 DEFAULT_TEMPERATURE = 0.7
 DEFAULT_TOP_P = 0.9
