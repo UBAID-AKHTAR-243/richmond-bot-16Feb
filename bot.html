@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Standard-1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* (Your existing styles – unchanged) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --whatsapp-green: #44804d;
+            --whatsapp-green-hover: #00ba8e;
+            --whatsapp-green-active: #009774;
+            --whatsapp-dark-bg: #0c1317;
+            --whatsapp-chat-bg: #111b21;
+            --whatsapp-panel-bg: #202c33;
+            --whatsapp-message-out: #005c4b;
+            --whatsapp-message-in: #202c33;
+            --whatsapp-text-primary: #e9edef;
+            --whatsapp-text-secondary: #8696a0;
+            --whatsapp-border: #222e35;
+            --whatsapp-online: #00a884;
+            --whatsapp-typing: #00a884;
+            --whatsapp-notification: #ff3b30;
+            --voice-button-active: #ff3b30;
+            --send-button-red: #ff3b30;
+            --blue-tick: #53bdeb;
+            --slider-progress: 0%;
+        }
+        body, html {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--whatsapp-dark-bg);
+            color: var(--whatsapp-text-primary);
+            height: 100%;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        .embed-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            background: var(--whatsapp-dark-bg);
+        }
+        .floating-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 380px;
+            height: 600px;
+            max-width: calc(100vw - 40px);
+            max-height: calc(100vh - 40px);
+            background: var(--whatsapp-dark-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 999999;
+            overflow: hidden;
+            resize: both;
+            min-width: 300px;
+            min-height: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .widget-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 999998;
+            box-shadow: 0 4px 20px rgba(0, 168, 132, 0.3);
+            transition: all 0.3s;
+        }
+        .widget-toggle:hover {
+            transform: scale(1.1);
+            background: var(--whatsapp-green-hover);
+        }
+        .whatsapp-container {
+            padding-bottom:60px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            background: var(--whatsapp-chat-bg);
+        }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--whatsapp-chat-bg);
+            position: relative;
+            width: 100%;
+            height:100%;
+            overflow: hidden;
+        }
+        .chat-header {
+            padding: 10px 15px;
+            background: var(--whatsapp-panel-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 60px;
+            border-bottom: 1px solid var(--whatsapp-border);
+            flex-shrink: 0;
+        }
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: var(--whatsapp-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .contact-info h2 {
+            font-size: clamp(14px, 3vw, 16px);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .contact-status {
+            font-size: 12px;
+            color: var(--whatsapp-text-secondary);
+        }
+        .contact-status.online {
+            color: var(--whatsapp-online);
+        }
+        .contact-status.offline {
+            color: var(--whatsapp-text-secondary);
+        }
+        .chat-header-icons {
+            display: flex;
+            gap: 15px;
+            color: var(--whatsapp-text-secondary);
+            flex-shrink: 0;
+        }
+        .chat-header-icons i {
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 5px;
+        }
+        .chat-header-icons i:hover {
+            color: var(--whatsapp-text-primary);
+        }
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 10px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23111b21'/%3E%3Cpath d='M0 50L50 0L100 50L50 100Z' fill='%23141e25' opacity='0.2'/%3E%3C/svg%3E");
+            background-size: 100px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .message-day {
+            text-align: center;
+            margin: 15px 0;
+            color: var(--whatsapp-text-secondary);
+            font-size: 11px;
+            position: relative;
+        }
+        .message-day span {
+            background: var(--whatsapp-panel-bg);
+            padding: 4px 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        .message {
+            max-width: 85%;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message.outgoing {
+            margin-left: auto;
+            align-items: flex-end;
+        }
+        .message.incoming {
+            margin-right: auto;
+            align-items: flex-start;
+        }
+        .message-bubble {
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: relative;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+        .message.outgoing .message-bubble {
+            background:#005c4b;
+            border-top-right-radius: 0;
+        }
+        .message.incoming .message-bubble {
+            background:#1e3d4c;
+            border-top-left-radius: 0;
+            color:#a1c2ba
+        }
+        .message-text {
+            font-size: 14px;
+            line-height: 1.4;
+            word-break: break-word;
+            color:white
+        }
+        .message-time {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: right;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 3px;
+        }
+        .message.incoming .message-time {
+            color: rgba(255, 255, 255, 0.5);
+            justify-content: flex-start;
+        }
+        .double-tick {
+            display: flex;
+            align-items: center;
+            gap: 1px;
+        }
+        .double-tick i {
+            font-size: 10px;
+        }
+        .double-tick.blue i {
+            color: var(--blue-tick) !important;
+        }
+        .audio-attachment {
+            max-width: 100%;
+            margin-top: 0px;
+        }
+        .audio-player {
+            background: var(--whatsapp-message-in);
+            border-radius: 8px;
+            padding: 0px;
+            position: relative;
+            max-width: 100%;
+        }
+        .message.outgoing .audio-player {
+            background: var(--whatsapp-message-out);
+        }
+        .audio-player.bubble-in {
+            position: relative;
+            border-top-left-radius: 0;
+        }
+        .audio-player.bubble-in::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 10px 10px 0;
+            border-color: transparent var(--whatsapp-message-in) transparent transparent;
+        }
+        .message.outgoing .audio-player.bubble-out {
+            position: relative;
+            border-top-right-radius: 0;
+        }
+        .message.outgoing .audio-player.bubble-out::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -8px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 10px 10px;
+            border-color: transparent transparent transparent var(--whatsapp-message-out);
+        }
+        .audio-player-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+        .audio-avatar {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .audio-avatar-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--whatsapp-text-secondary);
+            font-size: 16px;
+        }
+        .audio-mic-icon {
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            width: 16px;
+            height: 16px;
+            background: var(--whatsapp-text-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue-tick);
+            font-size: 16px;
+        }
+        .message.outgoing .audio-mic-icon {
+            background: var(--whatsapp-message-out);
+        }
+        .audio-play-btn-wrapper {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .audio-play-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: var(--whatsapp-text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+        .audio-play-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .audio-play-btn.playing {
+            color: var(--whatsapp-green);
+        }
+        .audio-play-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 32px;
+            height: 32px;
+            z-index: 1;
+            transform: rotate(-90deg);
+        }
+        .audio-play-progress circle {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        .audio-play-progress-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+        .audio-play-progress-fg {
+            stroke: var(--whatsapp-green);
+            stroke-dasharray: 94;
+            stroke-dashoffset: 94;
+            transition: stroke-dashoffset 0.1s linear;
+        }
+        .audio-play-btn.loading .audio-play-progress-fg {
+            animation: loadingSpin 1s linear infinite;
+            stroke: var(--whatsapp-text-secondary);
+        }
+        @keyframes loadingSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .audio-controls {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+        .audio-slider {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            position: relative;
+        }
+        .audio-slider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--slider-progress);
+            background: var(--blue-tick);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        .audio-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--blue-tick);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+        .audio-slider::-webkit-slider-thumb:hover {
+            background: var(--whatsapp-green-hover);
+            transform: scale(1.1);
+        }
+        .audio-time-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2px;
+        }
+        .audio-time-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .audio-current-time {
+            font-size: 11px;
+            color: var(--whatsapp-text-secondary);
+            font-variant-numeric: tabular-nums;
+        }
+        .audio-separator {
+            font-size: 11px;
+            color: var(--whatsapp-text-secondary);
+        }
+        .audio-total-time {
+            font-size: 11px;
+            color: var(--whatsapp-text-secondary);
+            font-variant-numeric: tabular-nums;
+        }
+        .audio-message-time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .audio-message-time .double-tick {
+            display: flex;
+            gap: 1px;
+        }
+        .audio-message-time .double-tick i {
+            font-size: 10px;
+        }
+        .audio-message-time .double-tick.blue i {
+            color: var(--blue-tick);
+        }
+        .input-container {
+            padding: 10px 15px;
+            background: var(--whatsapp-panel-bg);
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            min-height: 60px;
+            border-top: 1px solid var(--whatsapp-border);
+            flex-shrink: 0;
+        }
+        .message-input-wrapper {
+            flex: 1;
+            background: var(--whatsapp-chat-bg);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            padding: 6px 10px;
+            min-height: 36px;
+            max-height: 150px;
+            transition: all 0.3s ease;
+        }
+        .message-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--whatsapp-text-primary);
+            font-size: 15px;
+            outline: none;
+            resize: none;
+            width: 100%;
+            min-height: 14px;
+            max-height: 20px;
+            font-family: inherit;
+            line-height: 1.4;
+            overflow-y: auto;
+        }
+        .message-input::placeholder {
+            color: var(--whatsapp-text-secondary);
+        }
+        .input-buttons {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .voice-buttons-group {
+            display: flex;
+            gap: 6px;
+        }
+        .voice-button {
+            width: 34px;
+            height: 34px;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            color: var(--whatsapp-text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        .voice-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--whatsapp-text-primary);
+        }
+        .voice-button.active {
+            background: var(--voice-button-active);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        .voice-button.listening {
+            background: var(--whatsapp-green);
+            color: white;
+            animation: pulse-green 1.5s infinite;
+        }
+        .send-button-voice {
+            width: 34px;
+            height: 34px;
+            background: var(--send-button-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            opacity: 0;
+            transform: scale(0);
+            touch-action: manipulation;
+        }
+        .send-button-voice.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .send-button-voice:hover {
+            background: #ff2b20;
+        }
+        .send-button-voice i {
+            font-size: 14px;
+            transform: rotate(90deg);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(255, 59, 48, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(0, 168, 132, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(0, 168, 132, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 168, 132, 0); }
+        }
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            color: var(--voice-button-active);
+            font-size: 13px;
+            margin-top: 8px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .recording-indicator.active {
+            display: flex;
+        }
+        .recording-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--voice-button-active);
+            border-radius: 50%;
+        }
+        .listening-indicator {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            color: var(--whatsapp-green);
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .listening-indicator.active {
+            display: flex;
+        }
+        .listening-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            animation: pulse-green 1.5s infinite;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--whatsapp-border);
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--whatsapp-text-secondary);
+        }
+        @media (max-width: 480px) {
+            .message { max-width: 90%; }
+            .audio-player-container { gap: 8px; padding: 8px; }
+            .audio-avatar-icon { width: 36px; height: 36px; font-size: 14px; }
+            .chat-header { padding: 8px 12px; min-height: 55px; }
+            .avatar { width: 36px; height: 36px; min-width: 36px; font-size: 16px; }
+            .input-container { padding: 8px 12px; min-height: 55px; }
+            .voice-button { width: 32px; height: 32px; font-size: 13px; }
+            .send-button-voice { width: 32px; height: 32px; }
+            .floating-widget { width: calc(100vw - 20px); height: calc(100vh - 20px); bottom: 10px; right: 10px; left: 10px; top: 10px; border-radius: 10px; }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+            .message { max-width: 80%; }
+            .floating-widget { width: 420px; height: 700px; }
+        }
+        @media (min-width: 769px) {
+            .message { max-width: 70%; }
+            .floating-widget { width: 380px; height: 600px; }
+        }
+        @media (orientation: landscape) and (max-height: 500px) {
+            .chat-header { min-height: 50px; padding: 6px 10px; }
+            .avatar { width: 32px; height: 32px; min-width: 32px; font-size: 14px; }
+            .contact-info h2 { font-size: 14px; }
+            .input-container { min-height: 50px; padding: 6px 10px; }
+            .messages-container { padding: 10px 8px; }
+        }
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .message-text { font-weight: 400; }
+        }
+        @media (prefers-color-scheme: light) {
+            :root {
+                --whatsapp-dark-bg: #f0f2f5;
+                --whatsapp-chat-bg: #efeae2;
+                --whatsapp-panel-bg: #f0f2f5;
+                --whatsapp-message-in: #ffffff;
+                --whatsapp-text-primary: #303030;
+                --whatsapp-text-secondary: #65676b;
+            }
+            .messages-container {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23efeae2'/%3E%3Cpath d='M0 50L50 0L100 50L50 100Z' fill='%23e6dfd6' opacity='0.2'/%3E%3C/svg%3E");
+            }
+        }
+        @media print {
+            .embed-container, .floating-widget {
+                position: static;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="embed-container" id="embedContainer">
+        <div class="whatsapp-container">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="contact-info">
+                    <div class="avatar" id="contactAvatar">
+                        <img src="rich.jpeg" alt="Richmond Pharmaceutical Logo" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-building\'></i>';">
+                    </div>
+                    <div>
+                        <h2 id="contactName">Richmond's Assistant</h2>
+                        <p class="contact-status online" id="contactStatus">Online</p>
+                    </div>
+                </div>
+                <div class="chat-header-icons">
+                    <i class="fas fa-times" id="closeButton" title="Close chat" style="display: none;"></i>
+                    <i class="fas fa-plus" id="newChatButton" title="Start new chat"></i>
+                </div>
+            </div>
+            
+            <!-- Messages Area -->
+            <div class="messages-container" id="messagesContainer">
+                <div class="message-day">
+                    <span>Today</span>
+                </div>
+                <div class="message incoming" id="defaultWelcomeMessage">
+                    <div class="message-bubble">
+                        <div class="message-text">Welcome to Richmond Pharmaceutical! Click the microphone buttons or type below to start chatting.</div>
+                        <div class="message-time" id="currentTime"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Message Input Area -->
+            <div class="input-container">
+                <div class="message-input-wrapper">
+                    <textarea class="message-input" id="messageInput" placeholder="Type a message" rows="1"></textarea>
+                    <div class="input-buttons">
+                        <div class="recording-indicator" id="recordingIndicator">
+                            <div class="recording-dot"></div>
+                            <span>Recording: <span id="recordingDuration">0:00</span></span>
+                        </div>
+                        <div class="listening-indicator" id="listeningIndicator">
+                            <div class="listening-dot"></div>
+                            <span>Listening...</span>
+                        </div>
+                        <div class="voice-buttons-group">
+                            <button class="voice-button" id="voiceToVoice" title="Voice Message">
+                                <i class="fas fa-microphone-alt"></i>
+                            </button>
+                            <button class="voice-button" id="voiceToText" title="Voice to Text">
+                                <i class="fas fa-wave-square"></i>
+                            </button>
+                            <button class="send-button-voice" id="sendButton" title="Send message">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="voicePlayer" style="display: none;"></audio>
+    
+    <div class="avatar"></div>
+
+    <script>
+        // DOM Elements
+        const embedContainer = document.getElementById('embedContainer');
+        const floatingWidget = document.getElementById('floatingWidget');
+        const widgetToggle = document.getElementById('widgetToggle');
+        const closeButton = document.getElementById('closeButton');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const voiceToVoiceBtn = document.getElementById('voiceToVoice');
+        const voiceToTextBtn = document.getElementById('voiceToText');
+        const recordingIndicator = document.getElementById('recordingIndicator');
+        const listeningIndicator = document.getElementById('listeningIndicator');
+        const contactStatus = document.getElementById('contactStatus');
+        const defaultWelcomeMessage = document.getElementById('defaultWelcomeMessage');
+        const voicePlayer = document.getElementById('voicePlayer');
+        const newChatButton = document.getElementById('newChatButton');
+        const recordingDurationEl = document.getElementById('recordingDuration');
+
+        // State
+        let isRecording = false;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordingTimer = null;
+        let durationInterval = null;
+        let isFirstMessage = true;
+        let currentlyPlayingMessage = null;
+        let recordingStartTime = null;
+        let recordingDuration = 0;
+        let lastProgressUpdate = 0;
+        let isWidgetVisible = false;
+        
+        // Speech Recognition
+        let recognition = null;
+        let isSpeechRecognitionSupported = false;
+        let isListening = false;
+        
+        // Audio stream for recording
+        let audioStream = null;
+        
+        // WebSocket
+        let ws = null;
+        const WS_URL = 'ws://localhost:8000/ws';  // Adjust to your WebSocket server URL
+        
+        // Initialize
+        function init() {
+            setupEventListeners();
+            setupAudioSliderListeners();
+            adjustTextareaHeight();
+            updateCurrentTime();
+            setStatusBasedOnBrowser(); // initial status based on browser online state
+            initSpeechRecognition();
+            detectEmbedMode();
+            connectWebSocket();  // Establish WebSocket connection
+            
+            // Browser online/offline events – these are the only things that change the header status
+            window.addEventListener('online', setStatusBasedOnBrowser);
+            window.addEventListener('offline', setStatusBasedOnBrowser);
+            
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('orientationchange', handleOrientationChange);
+        }
+
+        // Set status purely based on navigator.onLine
+        function setStatusBasedOnBrowser() {
+            if (navigator.onLine) {
+                contactStatus.textContent = 'Online';
+                contactStatus.className = 'contact-status online';
+            } else {
+                contactStatus.textContent = 'Offline';
+                contactStatus.className = 'contact-status offline';
+            }
+        }
+
+        // WebSocket connection
+        function connectWebSocket() {
+            ws = new WebSocket(WS_URL);
+            
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+                // Do NOT change header status here – it's handled by browser events only
+            };
+            
+            ws.onmessage = (event) => {
+                // Handle incoming messages
+                if (typeof event.data === 'string') {
+                    // Text message - assume JSON
+                    try {
+                        const data = JSON.parse(event.data);
+                        handleIncomingMessage(data);
+                    } catch (e) {
+                        console.error('Failed to parse incoming JSON:', e);
+                    }
+                } else {
+                    // Binary data - treat as audio response
+                    event.data.arrayBuffer().then(arrayBuffer => {
+                        handleIncomingAudio(arrayBuffer);
+                    }).catch(e => console.error('Error processing binary message:', e));
+                }
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                // Do NOT change header status here
+            };
+            
+            ws.onclose = () => {
+                console.log('WebSocket closed, reconnecting in 3s...');
+                // Do NOT change header status here
+                setTimeout(connectWebSocket, 3000);
+            };
+        }
+
+        // Handle incoming JSON message (text, audio metadata, etc.)
+        function handleIncomingMessage(data) {
+            if (data.text) {
+                // Pure text response
+                displayLLMResponse({ text: data.text });
+            }
+            if (data.audio_data) {
+                // Base64 audio data
+                const binary = atob(data.audio_data);
+                const arrayBuffer = new Uint8Array(binary.length);
+                for (let i = 0; i < binary.length; i++) {
+                    arrayBuffer[i] = binary.charCodeAt(i);
+                }
+                handleIncomingAudio(arrayBuffer.buffer, data.duration);
+            }
+        }
+
+        // Handle incoming audio binary
+        function handleIncomingAudio(arrayBuffer, durationHint) {
+            const blob = new Blob([arrayBuffer], { type: 'audio/webm;codecs=opus' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary audio element to get duration
+            const tempAudio = new Audio();
+            tempAudio.src = url;
+            tempAudio.addEventListener('loadedmetadata', () => {
+                const duration = durationHint || Math.round(tempAudio.duration);
+                const mins = Math.floor(duration / 60);
+                const secs = duration % 60;
+                const durationStr = `${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                displayLLMResponse({
+                    voiceUrl: url,
+                    voiceDuration: durationStr,
+                    duration_seconds: duration
+                });
+            });
+            tempAudio.addEventListener('error', () => {
+                // Fallback duration
+                displayLLMResponse({
+                    voiceUrl: url,
+                    voiceDuration: durationHint || '0:05',
+                    duration_seconds: durationHint || 5
+                });
+            });
+        }
+
+        // Detect embed mode and setup accordingly
+        function detectEmbedMode() {
+            if (window.self !== window.top) {
+                console.log('Bot is embedded in iframe');
+                embedContainer.style.position = 'relative';
+                embedContainer.style.width = '100%';
+                embedContainer.style.height = '100%';
+            }
+            if (floatingWidget) {
+                closeButton.style.display = 'block';
+                widgetToggle.addEventListener('click', toggleWidget);
+                closeButton.addEventListener('click', toggleWidget);
+            }
+        }
+
+        // Toggle floating widget
+        function toggleWidget() {
+            isWidgetVisible = !isWidgetVisible;
+            if (floatingWidget) {
+                if (isWidgetVisible) {
+                    floatingWidget.style.display = 'block';
+                    widgetToggle.style.display = 'none';
+                    setTimeout(() => messageInput.focus(), 100);
+                } else {
+                    floatingWidget.style.display = 'none';
+                    widgetToggle.style.display = 'flex';
+                }
+            }
+        }
+
+        // Handle window resize
+        function handleResize() {
+            adjustTextareaHeight();
+            setTimeout(() => messagesContainer.scrollTop = messagesContainer.scrollHeight, 100);
+        }
+
+        // Handle orientation change
+        function handleOrientationChange() {
+            setTimeout(handleResize, 300);
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            sendButton.addEventListener('click', sendMessage);
+            
+            messageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (messageInput.value.trim()) sendMessage();
+                }
+                setTimeout(adjustTextareaHeight, 0);
+            });
+            
+            messageInput.addEventListener('input', () => {
+                const hasText = messageInput.value.trim().length > 0;
+                if (hasText) sendButton.classList.add('visible');
+                else sendButton.classList.remove('visible');
+                adjustTextareaHeight();
+            });
+            
+            voiceToVoiceBtn.addEventListener('click', toggleVoiceRecording);
+            voiceToVoiceBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                toggleVoiceRecording();
+            });
+            
+            voiceToTextBtn.addEventListener('click', toggleVoiceToText);
+            voiceToTextBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                toggleVoiceToText();
+            });
+            
+            newChatButton.addEventListener('click', startNewChat);
+            
+            voicePlayer.addEventListener('ended', stopAudioPlayback);
+            voicePlayer.addEventListener('pause', stopAudioPlayback);
+            voicePlayer.addEventListener('timeupdate', () => {
+                const now = Date.now();
+                if (now - lastProgressUpdate > 50) {
+                    updateAudioProgress();
+                    lastProgressUpdate = now;
+                }
+            });
+            voicePlayer.addEventListener('loadedmetadata', () => {
+                if (currentlyPlayingMessage) {
+                    const slider = document.getElementById(`slider-${currentlyPlayingMessage}`);
+                    if (slider) slider.max = 100;
+                }
+            });
+            
+            document.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 1) e.preventDefault();
+            }, { passive: false });
+            
+            document.addEventListener('contextmenu', (e) => {
+                if (e.target.closest('.message-input-wrapper') || 
+                    e.target.closest('.voice-button') || 
+                    e.target.closest('.audio-play-btn')) {
+                    e.preventDefault();
+                }
+            });
+        }
+        
+        // Setup audio slider listeners
+        function setupAudioSliderListeners() {
+            document.addEventListener('input', (e) => {
+                if (e.target.classList.contains('audio-slider')) {
+                    const slider = e.target;
+                    const messageId = slider.id.replace('slider-', '');
+                    
+                    if (currentlyPlayingMessage === messageId) {
+                        const seekTime = (slider.value / 100) * voicePlayer.duration;
+                        voicePlayer.currentTime = seekTime;
+                        updateAudioProgress();
+                    }
+                }
+            });
+            
+            document.addEventListener('touchstart', (e) => {
+                if (e.target.classList.contains('audio-slider')) {
+                    e.target.style.cursor = 'grabbing';
+                }
+            });
+            
+            document.addEventListener('touchend', (e) => {
+                if (e.target.classList.contains('audio-slider')) {
+                    e.target.style.cursor = 'grab';
+                }
+            });
+        }
+
+        // Start new chat
+        function startNewChat() {
+            const messages = messagesContainer.querySelectorAll('.message:not(#defaultWelcomeMessage), .message-day');
+            messages.forEach(msg => msg.remove());
+            
+            isFirstMessage = true;
+            messageInput.value = '';
+            sendButton.classList.remove('visible');
+            stopVoiceToText();
+            
+            defaultWelcomeMessage.style.display = 'flex';
+            
+            updateCurrentTime();
+            messagesContainer.scrollTop = 0;
+        }
+
+        // Adjust textarea height
+        function adjustTextareaHeight() {
+            messageInput.style.height = 'auto';
+            const newHeight = Math.min(messageInput.scrollHeight, 150);
+            messageInput.style.height = newHeight + 'px';
+            
+            const wrapper = messageInput.parentElement;
+            wrapper.style.minHeight = Math.max(36, newHeight + 40) + 'px';
+            
+            setTimeout(() => messagesContainer.scrollTop = messagesContainer.scrollHeight, 50);
+        }
+
+        // Update current time
+        function updateCurrentTime() {
+            const timeElement = document.getElementById('currentTime');
+            if (timeElement) {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                timeElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Send Message via WebSocket
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+            if (isFirstMessage) {
+                defaultWelcomeMessage.style.display = 'none';
+                isFirstMessage = false;
+            }
+            
+            const message = {
+                id: Date.now(),
+                type: 'outgoing',
+                text: text,
+                time: getCurrentTime(),
+                status: 'sent',
+                isTextMessage: true
+            };
+            
+            addMessageToUI(message);
+            
+            messageInput.value = '';
+            sendButton.classList.remove('visible');
+            adjustTextareaHeight();
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Send text via WebSocket if open; otherwise silently drop (no alert)
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'text', text: text }));
+            } else {
+                console.log('WebSocket not open; message not sent.');
+            }
+        }
+
+        // Voice Recording
+        async function toggleVoiceRecording() {
+            if (!isRecording) await startRecording();
+            else stopRecording();
+        }
+
+        // Start Recording
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: { echoCancellation: true, noiseSuppression: true, sampleRate: 44100 }
+                });
+                audioStream = stream;
+                audioChunks = [];
+                
+                const options = { mimeType: 'audio/webm;codecs=opus' };
+                
+                mediaRecorder = new MediaRecorder(stream, options);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    if (audioChunks.length > 0) {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm;codecs=opus' });
+                        const duration = Math.floor((Date.now() - recordingStartTime) / 1000);
+                        
+                        if (audioChunks.length > 0 && duration >= 0.5) {
+                            if (isFirstMessage) {
+                                defaultWelcomeMessage.style.display = 'none';
+                                isFirstMessage = false;
+                            }
+                            
+                            const message = {
+                                id: Date.now(),
+                                type: 'outgoing',
+                                voiceUrl: URL.createObjectURL(audioBlob),
+                                voiceDuration: formatDuration(duration),
+                                time: getCurrentTime(),
+                                status: 'sent',
+                                isTextMessage: false
+                            };
+                            
+                            addMessageToUI(message);
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                            
+                            // Show upload progress (simulated)
+                            const playButton = document.getElementById(`play-btn-${message.id}`);
+                            const progressCircle = document.querySelector(`#play-progress-${message.id} .audio-play-progress-fg`);
+                            if (playButton && progressCircle) {
+                                playButton.classList.add('loading');
+                            }
+                            
+                            // Store duration
+                            const messageElement = document.querySelector(`.message[data-id="${message.id}"]`);
+                            if (messageElement) {
+                                messageElement.dataset.audioDuration = duration;
+                            }
+                            
+                            // Send audio via WebSocket (binary) if open; otherwise silently drop (no alert)
+                            if (ws && ws.readyState === WebSocket.OPEN) {
+                                ws.send(audioBlob);
+                            } else {
+                                console.log('WebSocket not open; audio message not sent.');
+                            }
+                            
+                            // Remove loading state after a short delay (will be updated when response arrives)
+                            setTimeout(() => {
+                                if (playButton && progressCircle) {
+                                    playButton.classList.remove('loading');
+                                    progressCircle.style.strokeDashoffset = 94;
+                                }
+                            }, 1000);
+                            
+                        } else if (duration < 0.5) {
+                            alert("Recording too short. Please record at least half a second.");
+                        }
+                    }
+                    
+                    if (audioStream) {
+                        audioStream.getTracks().forEach(track => track.stop());
+                        audioStream = null;
+                    }
+                };
+
+                mediaRecorder.onerror = (event) => {
+                    console.error('MediaRecorder error:', event.error);
+                    stopRecording();
+                    alert('Error recording audio. Please try again.');
+                };
+
+                mediaRecorder.start(100);
+                
+                voiceToVoiceBtn.classList.add('active');
+                recordingIndicator.classList.add('active');
+                isRecording = true;
+                recordingStartTime = Date.now();
+                recordingDuration = 0;
+                recordingDurationEl.textContent = '0:00';
+                
+                recordingTimer = setTimeout(() => {
+                    if (isRecording) stopRecording();
+                }, 60000);
+                
+                durationInterval = setInterval(() => {
+                    if (isRecording) {
+                        recordingDuration = Math.floor((Date.now() - recordingStartTime) / 1000);
+                        const seconds = recordingDuration % 60;
+                        const minutes = Math.floor(recordingDuration / 60);
+                        recordingDurationEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                alert('Could not access microphone. Please check permissions and try again.');
+                isRecording = false;
+                voiceToVoiceBtn.classList.remove('active');
+            }
+        }
+
+        // Stop Recording
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+            }
+            
+            clearTimeout(recordingTimer);
+            clearInterval(durationInterval);
+            
+            voiceToVoiceBtn.classList.remove('active');
+            recordingIndicator.classList.remove('active');
+            isRecording = false;
+            recordingDuration = 0;
+            recordingStartTime = null;
+            
+            if (audioStream) {
+                audioStream.getTracks().forEach(track => track.stop());
+                audioStream = null;
+            }
+        }
+
+        // Speech Recognition
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                isSpeechRecognitionSupported = true;
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'en-US';
+                
+                recognition.onstart = () => {
+                    console.log('Speech recognition started');
+                    isListening = true;
+                    voiceToTextBtn.classList.add('listening');
+                    listeningIndicator.classList.add('active');
+                };
+                
+                recognition.onresult = (event) => {
+                    let interimTranscript = '';
+                    let finalTranscript = '';
+                    
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const transcript = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcript;
+                        } else {
+                            interimTranscript += transcript;
+                        }
+                    }
+                    
+                    if (finalTranscript) {
+                        messageInput.value = finalTranscript;
+                    } else if (interimTranscript) {
+                        messageInput.value = interimTranscript;
+                    }
+                    
+                    if (messageInput.value.trim()) {
+                        sendButton.classList.add('visible');
+                    }
+                };
+                
+                recognition.onend = () => {
+                    console.log('Speech recognition ended');
+                    if (isListening) {
+                        setTimeout(() => {
+                            if (isListening) {
+                                try {
+                                    recognition.start();
+                                } catch (e) {
+                                    console.log('Could not restart recognition:', e);
+                                }
+                            }
+                        }, 100);
+                    }
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    if (event.error === 'no-speech') return;
+                    stopVoiceToText();
+                };
+            } else {
+                console.warn('Speech recognition not supported');
+                isSpeechRecognitionSupported = false;
+            }
+        }
+
+        // Toggle Voice to Text
+        function toggleVoiceToText() {
+            if (!isListening) startVoiceToText();
+            else stopVoiceToText();
+        }
+
+        // Start Voice to Text
+        function startVoiceToText() {
+            if (!isSpeechRecognitionSupported) {
+                alert('Speech recognition is not supported in your browser. Please type your message instead.');
+                return;
+            }
+            
+            if (recognition) {
+                try {
+                    recognition.start();
+                } catch (error) {
+                    console.error('Error starting speech recognition:', error);
+                }
+            }
+        }
+
+        // Stop Voice to Text
+        function stopVoiceToText() {
+            if (recognition && isListening) {
+                try {
+                    recognition.stop();
+                } catch (error) {
+                    console.error('Error stopping speech recognition:', error);
+                }
+            }
+            
+            voiceToTextBtn.classList.remove('listening');
+            listeningIndicator.classList.remove('active');
+            isListening = false;
+        }
+
+        // Play Voice Message
+        function playVoiceMessage(messageId) {
+            const messageElement = document.querySelector(`.message[data-id="${messageId}"]`);
+            if (!messageElement) return;
+            
+            const audioUrl = messageElement.dataset.audioUrl;
+            if (!audioUrl) {
+                console.error('No audio URL found for message:', messageId);
+                return;
+            }
+            
+            if (currentlyPlayingMessage === messageId) {
+                if (!voicePlayer.paused) {
+                    voicePlayer.pause();
+                    updatePlayButton(messageId, false);
+                    updateProgressCircle(messageId, 0);
+                    currentlyPlayingMessage = null;
+                }
+                return;
+            }
+            
+            if (currentlyPlayingMessage) {
+                voicePlayer.pause();
+                updatePlayButton(currentlyPlayingMessage, false);
+                updateProgressCircle(currentlyPlayingMessage, 0);
+                resetProgressBar(currentlyPlayingMessage);
+            }
+            
+            voicePlayer.src = audioUrl;
+            currentlyPlayingMessage = messageId;
+            
+            const playButton = document.getElementById(`play-btn-${messageId}`);
+            if (playButton) playButton.classList.add('loading');
+            
+            voicePlayer.play().then(() => {
+                updatePlayButton(messageId, true);
+                if (playButton) playButton.classList.remove('loading');
+                requestAnimationFrame(updateAudioProgress);
+            }).catch(e => {
+                console.error('Error playing audio:', e);
+                alert('Error playing audio. The audio format might not be supported.');
+                currentlyPlayingMessage = null;
+                if (playButton) playButton.classList.remove('loading');
+            });
+        }
+
+        // Update play button state
+        function updatePlayButton(messageId, isPlaying) {
+            const playIcon = document.getElementById(`play-icon-${messageId}`);
+            const playButton = document.getElementById(`play-btn-${messageId}`);
+            
+            if (playIcon) {
+                if (isPlaying) {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                    if (playButton) playButton.classList.add('playing');
+                } else {
+                    playIcon.classList.remove('fa-pause');
+                    playIcon.classList.add('fa-play');
+                    if (playButton) playButton.classList.remove('playing');
+                }
+            }
+        }
+        
+        // Update progress circle
+        function updateProgressCircle(messageId, progress) {
+            const progressCircle = document.querySelector(`#play-progress-${messageId} .audio-play-progress-fg`);
+            if (progressCircle) {
+                progressCircle.style.strokeDashoffset = 94 - (94 * progress / 100);
+            }
+        }
+
+        // Reset progress bar
+        function resetProgressBar(messageId) {
+            const slider = document.getElementById(`slider-${messageId}`);
+            const currentTimeEl = document.getElementById(`current-time-${messageId}`);
+            
+            if (slider) {
+                slider.value = 0;
+                slider.style.setProperty('--slider-progress', '0%');
+            }
+            
+            if (currentTimeEl) {
+                currentTimeEl.textContent = '0:00';
+            }
+            
+            updateProgressCircle(messageId, 0);
+        }
+
+        // Update Audio Progress
+        function updateAudioProgress() {
+            if (!voicePlayer.duration || voicePlayer.duration === Infinity) return;
+            
+            const progress = (voicePlayer.currentTime / voicePlayer.duration) * 100;
+            
+            if (currentlyPlayingMessage) {
+                const slider = document.getElementById(`slider-${currentlyPlayingMessage}`);
+                const currentTimeEl = document.getElementById(`current-time-${currentlyPlayingMessage}`);
+                
+                if (slider) {
+                    slider.value = progress;
+                    slider.style.setProperty('--slider-progress', `${progress}%`);
+                }
+                
+                if (currentTimeEl) {
+                    let mins = Math.floor(voicePlayer.currentTime / 60);
+                    let secs = Math.floor(voicePlayer.currentTime % 60);
+                    if (secs < 10) secs = '0' + secs;
+                    currentTimeEl.textContent = `${mins}:${secs}`;
+                }
+                
+                updateProgressCircle(currentlyPlayingMessage, progress / 100);
+                
+                const messageElement = document.querySelector(`.message[data-id="${currentlyPlayingMessage}"]`);
+                if (messageElement && !messageElement.dataset.totalTimeSet) {
+                    const duration = voicePlayer.duration;
+                    if (duration && duration !== Infinity) {
+                        const totalMins = Math.floor(duration / 60);
+                        const totalSecs = Math.floor(duration % 60);
+                        const totalTimeElement = document.getElementById(`total-time-${currentlyPlayingMessage}`);
+                        if (totalTimeElement) {
+                            totalTimeElement.textContent = `${totalMins}:${totalSecs.toString().padStart(2, '0')}`;
+                            messageElement.dataset.totalTimeSet = true;
+                        }
+                    }
+                }
+                
+                if (!voicePlayer.paused && !voicePlayer.ended) {
+                    requestAnimationFrame(updateAudioProgress);
+                }
+            }
+        }
+
+        // Stop Audio Playback
+        function stopAudioPlayback() {
+            if (currentlyPlayingMessage) {
+                updatePlayButton(currentlyPlayingMessage, false);
+                updateProgressCircle(currentlyPlayingMessage, 0);
+                resetProgressBar(currentlyPlayingMessage);
+                currentlyPlayingMessage = null;
+            }
+            
+            voicePlayer.pause();
+            voicePlayer.currentTime = 0;
+        }
+
+        // Add Message to UI
+        function addMessageToUI(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.type}`;
+            messageDiv.dataset.id = message.id;
+            
+            let messageContent = '';
+            
+            if (message.text) {
+                messageContent += `<div class="message-text">${escapeHtml(message.text)}</div>`;
+            }
+            
+            if (message.voiceUrl) {
+                const bubbleClass = message.type === 'incoming' ? 'bubble-in' : 'bubble-out';
+                const tickMarks = message.type === 'outgoing' ? 
+                    `<div class="double-tick" id="ticks-${message.id}"><i class="fas fa-check"></i><i class="fas fa-check"></i></div>` : '';
+                
+                messageDiv.dataset.audioUrl = message.voiceUrl;
+                
+                messageContent += `
+                    <div class="audio-attachment">
+                        <div class="audio-player ${bubbleClass}">
+                            <div class="audio-player-container">
+                                <div class="audio-avatar">
+                                    <div class="audio-avatar-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="audio-mic-icon">
+                                        <i class="fas fa-microphone"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="audio-play-btn-wrapper">
+                                    <svg class="audio-play-progress" id="play-progress-${message.id}" width="32" height="32" viewBox="0 0 32 32">
+                                        <circle class="audio-play-progress-bg" cx="16" cy="16" r="15"/>
+                                        <circle class="audio-play-progress-fg" cx="16" cy="16" r="15"/>
+                                    </svg>
+                                    <button class="audio-play-btn" id="play-btn-${message.id}" onclick="playVoiceMessage('${message.id}')">
+                                        <i class="fas fa-play" id="play-icon-${message.id}"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="audio-controls">
+                                    <input type="range" class="audio-slider" id="slider-${message.id}" value="0" step="0.1" min="0" max="100">
+                                    <div class="audio-time-display">
+                                        <div class="audio-time-container">
+                                            <span class="audio-current-time" id="current-time-${message.id}">0:00</span>
+                                            <span class="audio-separator">/</span>
+                                            <span class="audio-total-time" id="total-time-${message.id}">${message.voiceDuration}</span>
+                                        </div>
+                                        <div class="audio-message-time">
+                                            <span>${message.time}</span>
+                                            ${tickMarks}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const textTickMarks = message.type === 'outgoing' && !message.voiceUrl ? 
+                '<div class="double-tick" id="ticks-' + message.id + '"><i class="fas fa-check"></i><i class="fas fa-check"></i></div>' : '';
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble">
+                    ${messageContent}
+                    ${!message.voiceUrl ? `<div class="message-time">${message.time} ${textTickMarks}</div>` : ''}
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            
+            if (message.type === 'outgoing') {
+                setTimeout(() => {
+                    const tickElement = document.getElementById(`ticks-${message.id}`);
+                    if (tickElement) tickElement.classList.add('blue');
+                }, 1000);
+            }
+            
+            setTimeout(() => messageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' }), 100);
+        }
+
+        // Display LLM response (incoming message)
+        function displayLLMResponse(response) {
+            const message = {
+                id: Date.now(),
+                type: 'incoming',
+                text: response.text || '',
+                time: getCurrentTime(),
+                isTextMessage: true
+            };
+            
+            if (response.voiceUrl) {
+                message.voiceUrl = response.voiceUrl;
+                message.voiceDuration = response.voiceDuration || '0:00';
+                message.voiceDurationSeconds = response.duration_seconds || 0;
+            }
+            
+            addMessageToUI(message);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Preload audio for voice messages
+            if (response.voiceUrl) {
+                const audio = new Audio(response.voiceUrl);
+                audio.addEventListener('loadedmetadata', () => {
+                    const totalMins = Math.floor(audio.duration / 60);
+                    const totalSecs = Math.floor(audio.duration % 60);
+                    const totalTimeEl = document.getElementById(`total-time-${message.id}`);
+                    if (totalTimeEl) {
+                        totalTimeEl.textContent = `${totalMins}:${totalSecs.toString().padStart(2, '0')}`;
+                    }
+                    const msgEl = document.querySelector(`.message[data-id="${message.id}"]`);
+                    if (msgEl) msgEl.dataset.audioDuration = Math.round(audio.duration);
+                });
+            }
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Helper Functions
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        }
+
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
