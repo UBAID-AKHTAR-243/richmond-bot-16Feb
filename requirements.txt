@@ -3,23 +3,21 @@
 #   command to deactivate environment      # deactivate
 #   command to install requirements.txt    # pip install -r requirements.txt
 #   command to uninstall requirements.txt  # Get-Content requirements.txt | % { pip uninstall -y ($_ -split '[=<>!~]')[0] }
-
+#   export OPENAI_API_KEY="your-api-key-here"
 
 chromadb
-json
-re
 # Core Frameworks
 pip               # python -m pip install --upgrade pip
 fastapi>=0.104.0           # pip install fastapi
 uvicorn>=0.24.0            # pip install uvicorn
 pydantic>=2.4.0            # pip install pydantic>=2.4.0
 pydantic-settings>=2.1.0   #  pip install pydantic-settings>=2.1.0
-
 # LLM & Embeddings
 transformers>=4.36.0        # pip install transformers>=4.36.0
 torch               # pip install torch torchvision torchaudio
 accelerate>=0.25.0          # pip install accelerate>=0.25.0
 sentence-transformers>=2.2.2     # pip install sentence-transformers>=2.2.2
+sentence-transformers
 
 # Vector Store
 faiss-cpu==1.7.4             #    pip install faiss-cpu==1.7.4          # Use faiss-gpu if you have CUDA
@@ -36,7 +34,25 @@ langcodes            # pip install langcodes
 fastapi              # pip install fastapi
 faiss-cpu>=1.7.4          #   pip install faiss-cpu>=1.7..4
 sentence_transformers
-TTS                #  pip install TTS      # pip cache purge # if still facing problem to install ,--install microsoft vs c++ builds tools.
+TTS==0.22.0                #  pip install TTS      # pip cache purge # if still facing problem to install ,--install microsoft vs c++ builds tools.
 # to check version of coqui-tt  #    pip list | findstr -i tts   # All installed packages with versions
 langcodes         # pip install langcodes    # to check version    pip list | Select-String langcodes
 #pip list | findstr aiofiles  #   test version of aiofiles in test file #
+# --- LangChain Core Stack (Feb 2026 Stable) ---
+langchain==1.2.10
+langchain-core==1.2.14
+langchain-text-splitters==1.1.1
+langchain-experimental==0.4.1
+
+# --- Model & Integration ---
+langchain-openai==1.1.10
+openai>=1.60.0
+
+# --- Supporting Utilities for Pharma Data ---
+tiktoken>=0.8.0      # Required for precise token counting (256/1024 chunks)
+pydantic>=2.10.0     # For metadata schema validation
+  #TO  check version pip list | findstr langchain
+rank_bm25
+slowapi
+python-multipart
+aiofiles
