@@ -2,1335 +2,995 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Richmond Pharmaceutical | Advancing Medicine Through Research</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Richmond Pharmaceuticals - Natural Division</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for mobile menu icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== SPACESHIP DESIGN SYSTEM ===== */
-        :root {
-            /* Color Palette from Spaceship */
-            --primary: #0a0a23;
-            --primary-light: #1a1a3a;
-            --secondary: #2563eb;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            
-            /* Neutral Colors */
-            --dark: #0f172a;
-            --gray-dark: #334155;
-            --gray: #64748b;
-            --gray-light: #cbd5e1;
-            --gray-lighter: #e2e8f0;
-            --light: #f8fafc;
-            --white: #ffffff;
-            
-            /* Gradients */
-            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-            --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            
-            /* Spacing */
-            --space-xs: 4px;
-            --space-sm: 8px;
-            --space-md: 16px;
-            --space-lg: 24px;
-            --space-xl: 32px;
-            --space-2xl: 48px;
-            --space-3xl: 64px;
-            
-            /* Typography */
-            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-heading: 'Montserrat', sans-serif;
-            
-            /* Shadows */
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-            --radius-full: 9999px;
-            
-            /* Transitions */
-            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* ===== BASE RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
+        :root {
+            --primary-green: #2d5a27;
+            --dark-green: #1e3d1a;
+            --light-green: #4a7c43;
+            --gold: #c9a227;
+            --light-gold: #e0c158;
+            --white: #ffffff;
+            --off-white: #f8f9f5;
+            --text-dark: #2c3e2d;
+            --text-light: #5a6b5c;
+            --header-height: 120px;
+            --header-top-height: 36px;
         }
 
         body {
-            font-family: var(--font-primary);
-            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
             line-height: 1.6;
-            color: #ffffff;
-            background-color: var(--gray);
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--white);
         }
 
-        /* ===== TYPOGRAPHY ===== */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            line-height: 1.2;
-            color: var(--dark);
-            margin-bottom: var(--space-lg);
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            letter-spacing: -0.01em;
-        }
-
-        h3 {
-            font-size: 1.875rem;
-        }
-
-        h4 {
-            font-size: 1.5rem;
-        }
-
-        p {
-            margin-bottom: var(--space-md);
-            font-size: 1.125rem;
-            color: var(--gray);
-        }
-
-        .lead {
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
-
-        .text-small {
-            font-size: 0.875rem;
-            color: var(--gray);
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-sm);
-            padding: var(--space-md) var(--space-xl);
-            font-family: var(--font-primary);
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1;
-            text-decoration: none;
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all var(--transition-normal);
-            position: relative;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: var(--transition-normal);
-        }
-
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--white);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--secondary);
-            border: 2px solid var(--secondary);
-        }
-
-        .btn-outline:hover {
-            background: var(--secondary);
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--gray-dark);
-            border: 2px solid var(--gray-lighter);
-        }
-
-        .btn-ghost:hover {
-            border-color: var(--gray);
-            transform: translateY(-2px);
-        }
-
-        .btn-large {
-            padding: var(--space-lg) var(--space-2xl);
-            font-size: 1.125rem;
-        }
-
-        /* ===== HEADER & NAVIGATION ===== */
-        .site-header {
+        /* Header Styles */
+        header {
             background: var(--white);
-            border-bottom: 1px solid var(--gray-lighter);
-            position: sticky;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
         }
 
-        .header-container {
+        .header-top {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 8px 0;
+            font-size: 0.85rem;
+            height: var(--header-top-height);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: var(--space-lg) 0;
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: var(--space-lg) var(--space-xl);
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .header-top-content {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            min-height: calc(var(--header-height) - var(--header-top-height));
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--dark);
-            transition: var(--transition-normal);
+            gap: 10px;
+            flex: 1;
         }
 
-        .logo:hover {
-            color: var(--secondary);
+        .logo img {
+            height: 50px;
+            width: auto;
+            max-width: 100%;
         }
 
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--gradient-primary);
-            border-radius: var(--radius-md);
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            color: var(--primary-green);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            display: block;
+        }
+
+        /* Desktop navigation */
+        .desktop-nav {
+            display: none;
+        }
+
+        .desktop-nav ul {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: bold;
+            list-style: none;
+            gap: 20px;
         }
 
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: var(--space-xl);
-        }
-
-        .nav-link {
+        .desktop-nav a {
             text-decoration: none;
-            color: var(--gray-dark);
+            color: var(--text-dark);
             font-weight: 500;
-            font-size: 1rem;
-            padding: var(--space-sm) 0;
+            font-size: 0.95rem;
+            transition: color 0.3s;
             position: relative;
-            transition: var(--transition-normal);
+            white-space: nowrap;
         }
 
-        .nav-link:hover {
-            color: var(--secondary);
+        .desktop-nav a:hover {
+            color: var(--primary-green);
         }
 
-        .nav-link::after {
+        .desktop-nav a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--secondary);
-            transition: var(--transition-normal);
+            background: var(--gold);
+            transition: width 0.3s;
         }
 
-        .nav-link:hover::after {
+        .desktop-nav a:hover::after {
             width: 100%;
         }
 
-        .nav-actions {
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
+            gap: 15px;
         }
 
-        .mobile-toggle {
-            display: none;
+        .icon-btn {
             background: none;
             border: none;
-            font-size: 1.5rem;
-            color: var(--gray-dark);
             cursor: pointer;
-            padding: var(--space-sm);
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ===== HERO SECTION ===== */
-        .hero-section {
-            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
-            padding: var(--space-3xl) var(--space-xl);
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--gold);
+            color: var(--white);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: flex;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--primary-green);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Mobile menu overlay */
+        .mobile-nav {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-150%);
+            transition: transform 0.3s ease;
+            z-index: 999;
+            border-top: 1px solid rgba(45,90,39,0.1);
+        }
+
+        .mobile-nav.active {
+            transform: translateY(0);
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            padding: 5px 0;
+        }
+
+        /* Responsive breakpoints */
+        @media (min-width: 992px) {
+            .desktop-nav {
+                display: block;
+            }
+            .mobile-menu-btn {
+                display: none;
+            }
+            :root {
+                --header-height: 130px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .header-actions .icon-btn:not(.mobile-menu-btn):not(.cart-btn) {
+                display: none; /* hide extra icons on mobile */
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+            background: linear-gradient(135deg, rgba(45, 90, 39, 0.95), rgba(30, 61, 26, 0.85)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f0f4ef" width="1200" height="800"/><path fill="%232d5a27" opacity="0.2" d="M0 400Q300 300 600 400T1200 400V800H0Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
             position: relative;
             overflow: hidden;
+            padding: 60px 0;
         }
 
-        .hero-section::before {
+        .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 60%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.05) 100%);
-            transform: rotate(12deg);
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1" d="M20,50 Q40,30 60,50 T100,50 T140,50 T180,50"/></svg>');
+            opacity: 0.2;
         }
 
         .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease;
+            width: 100%;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero-badge img {
+            height: 28px;
+            filter: brightness(0) invert(1);
+        }
+
+        .hero-badge span {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 10vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            opacity: 0.95;
             max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+            padding: 0 10px;
         }
 
-        .hero-title {
-            font-size: 3.75rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: var(--space-xl);
-            background: linear-gradient(135deg, var(--dark) 0%, var(--gray-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .btn-primary {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: var(--gold);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid var(--gold);
+            font-size: clamp(0.9rem, 3vw, 1rem);
         }
 
-        .hero-description {
-            font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: var(--space-2xl);
-            max-width: 90%;
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.3);
         }
 
-        .hero-actions {
-            display: flex;
-            gap: var(--space-md);
+        /* Second Hero Section */
+        .hero-secondary {
+            background: var(--off-white);
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .hero-secondary::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 40%;
+            background: linear-gradient(to right, rgba(45, 90, 39, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        .hero-secondary-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .hero-secondary-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        .hero-secondary-text .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
-        .hero-stats {
+        .hero-secondary-text .badge img {
+            height: 40px;
+            max-width: 100%;
+        }
+
+        .hero-secondary-text .badge span {
+            color: var(--light-green);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .hero-secondary-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-secondary-text p {
+            color: var(--text-light);
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .hero-secondary-image {
+            position: relative;
+            min-height: 300px;
+            background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(45, 90, 39, 0.2);
             display: flex;
-            gap: var(--space-2xl);
-            margin-top: var(--space-3xl);
+            align-items: center;
+            justify-content: center;
         }
 
-        .stat-item {
-            display: flex;
-            flex-direction: column;
+        .hero-secondary-image::after {
+            content: '🌿';
+            font-size: clamp(5rem, 15vw, 8rem);
+            opacity: 0.3;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--secondary);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--gray);
-            margin-top: var(--space-xs);
-        }
-
-        /* ===== FEATURES SECTION ===== */
-        .features-section {
-            padding: var(--space-3xl) var(--space-xl);
+        /* Featured Products */
+        .featured-products {
+            padding: 60px 0;
             background: var(--white);
         }
 
         .section-header {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto var(--space-3xl);
+            margin-bottom: 40px;
+            padding: 0 15px;
         }
 
-        .section-subtitle {
-            display: inline-block;
-            background: var(--gradient-primary);
-            color: var(--white);
-            padding: var(--space-xs) var(--space-md);
-            border-radius: var(--radius-full);
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: var(--space-lg);
+        .section-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            color: var(--primary-green);
+            margin-bottom: 10px;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--space-xl);
-            max-width: 1200px;
+        .section-header p {
+            color: var(--text-light);
+            max-width: 600px;
             margin: 0 auto;
+            font-size: clamp(0.9rem, 3vw, 1rem);
         }
 
-        .feature-card {
-            background: var(--white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-xl);
-            box-shadow: var(--shadow-md);
-            transition: all var(--transition-normal);
-            border: 1px solid var(--gray-lighter);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--accent);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--space-lg);
-        }
-
-        .feature-icon i {
-            font-size: 1.5rem;
-            color: var(--secondary);
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: var(--space-md);
-        }
-
-        /* ===== PLANS SECTION (Spaceship Style) ===== */
-        .plans-section {
-            padding: var(--space-3xl) var(--space-xl);
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        .plans-container {
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: var(--space-xl);
-            max-width: 1200px;
-            margin: var(--space-3xl) auto 0;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 0 5px;
         }
 
-        .plan-card {
+        .product-card {
             background: var(--white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-2xl);
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            transition: all var(--transition-normal);
-            border: 2px solid transparent;
-        }
-
-        .plan-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--secondary);
-        }
-
-        .plan-card.popular {
-            border-color: var(--secondary);
-            transform: scale(1.05);
-        }
-
-        .plan-card.popular:hover {
-            transform: scale(1.05) translateY(-8px);
-        }
-
-        .plan-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient-primary);
-            color: var(--white);
-            padding: var(--space-xs) var(--space-lg);
-            border-radius: var(--radius-full);
-            font-size: 0.875rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .plan-header {
-            text-align: center;
-            margin-bottom: var(--space-xl);
-            padding-bottom: var(--space-lg);
-            border-bottom: 1px solid var(--gray-lighter);
-        }
-
-        .plan-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: var(--space-sm);
-        }
-
-        .plan-description {
-            color: var(--gray);
-            font-size: 1rem;
-        }
-
-        .plan-price {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            gap: var(--space-xs);
-            margin: var(--space-lg) 0;
-        }
-
-        .price-amount {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--dark);
-            line-height: 1;
-        }
-
-        .price-period {
-            color: var(--gray);
-            font-size: 1rem;
-        }
-
-        .original-price {
-            text-decoration: line-through;
-            color: var(--gray-light);
-            font-size: 1.25rem;
-            margin-right: var(--space-sm);
-        }
-
-        .discount-badge {
-            display: inline-block;
-            background: var(--success);
-            color: var(--white);
-            padding: 2px 8px;
-            border-radius: var(--radius-sm);
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-left: var(--space-sm);
-        }
-
-        .plan-features {
-            list-style: none;
-            margin: var(--space-xl) 0;
-        }
-
-        .plan-features li {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-            margin-bottom: var(--space-md);
-            color: var(--gray-dark);
-        }
-
-        .plan-features li i {
-            color: var(--success);
-            font-size: 1.125rem;
-        }
-
-        .plan-features li.disabled {
-            color: var(--gray-light);
-        }
-
-        .plan-features li.disabled i {
-            color: var(--gray-light);
-        }
-
-        .add-ons {
-            background: var(--light);
-            border-radius: var(--radius-lg);
-            padding: var(--space-lg);
-            margin: var(--space-xl) 0;
-        }
-
-        .add-ons-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray);
-            margin-bottom: var(--space-md);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .add-on-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: var(--space-md);
-            background: var(--white);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-sm);
-            border: 1px solid var(--gray-lighter);
-        }
-
-        .add-on-label {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .add-on-price {
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .trial-notice {
-            display: block;
-            text-align: center;
-            color: var(--gray);
-            font-size: 0.875rem;
-            margin-top: var(--space-md);
-        }
-
-        /* ===== MEDICINE CARDS ===== */
-        .medicine-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: var(--space-xl);
-            max-width: 1200px;
-            margin: var(--space-3xl) auto 0;
-        }
-
-        .medicine-card {
-            background: var(--white);
-            border-radius: var(--radius-xl);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: all var(--transition-normal);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(45, 90, 39, 0.1);
+            display: flex;
+            flex-direction: column;
         }
 
-        .medicine-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(45, 90, 39, 0.15);
         }
 
-        .medicine-image {
+        .product-image {
             height: 200px;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: linear-gradient(135deg, var(--off-white), #e8efe8);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--space-xl);
-        }
-
-        .medicine-image i {
             font-size: 4rem;
-            color: var(--secondary);
+            position: relative;
+            overflow: hidden;
         }
 
-        .medicine-content {
-            padding: var(--space-xl);
+        .product-info {
+            padding: 20px;
+            flex: 1;
         }
 
-        .medicine-category {
-            display: inline-block;
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--secondary);
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
+        .product-category {
+            color: var(--gold);
             font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
-        /* ===== RESEARCH SECTION ===== */
-        .research-section {
-            padding: var(--space-3xl) var(--space-xl);
-            background: var(--dark);
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-green);
             color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
-        .research-section h2 {
-            color: var(--white);
+        .add-to-cart:hover {
+            background: var(--dark-green);
         }
 
-        .research-section p {
-            color: var(--gray-light);
+        /* About Section */
+        .about {
+            padding: 60px 0;
+            background: linear-gradient(to bottom, var(--off-white), var(--white));
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ===== FOOTER ===== */
-        .site-footer {
-            background: var(--dark);
-            color: var(--gray-light);
-            padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+        .about::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        .footer-grid {
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 15px;
+        }
+
+        .about-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            color: var(--primary-green);
+            margin-bottom: 5px;
+        }
+
+        .about-header h3 {
+            color: var(--gold);
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            color: var(--text-light);
+            line-height: 1.8;
+            padding: 0 20px;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Info Cards */
+        .info-section {
+            padding: 60px 0;
+            background: var(--white);
+        }
+
+        .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-2xl);
-            max-width: 1200px;
-            margin: 0 auto var(--space-2xl);
+            grid-template-columns: 1fr;
+            gap: 30px;
         }
 
-        .footer-column h4 {
-            color: var(--white);
-            font-size: 1.125rem;
-            margin-bottom: var(--space-lg);
+        @media (min-width: 768px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .footer-links {
-            list-style: none;
+        .info-card {
+            padding: 30px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(45, 90, 39, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer-links li {
-            margin-bottom: var(--space-sm);
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--gold), var(--primary-green));
         }
 
-        .footer-links a {
-            color: var(--gray-light);
-            text-decoration: none;
-            transition: var(--transition-normal);
+        .info-card:hover {
+            transform: translateY(-5px);
         }
 
-        .footer-links a:hover {
-            color: var(--white);
-        }
-
-        .social-links {
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 5vw, 1.8rem);
+            color: var(--primary-green);
+            margin-bottom: 15px;
             display: flex;
-            gap: var(--space-md);
-            margin-top: var(--space-lg);
+            align-items: center;
+            gap: 10px;
         }
 
-        .social-links a {
+        .info-card h3::before {
+            content: '';
+            display: inline-block;
             width: 40px;
             height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            background: var(--primary-green);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition-normal);
+            color: white;
+            font-size: 1.2rem;
         }
 
-        .social-links a:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
+        .info-card:nth-child(1) h3::before { content: '👥'; }
+        .info-card:nth-child(2) h3::before { content: '⚗️'; }
+
+        .info-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-green);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
         }
 
         .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: var(--space-xl);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
             text-align: center;
-            font-size: 0.875rem;
-            color: var(--gray);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
         }
 
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1024px) {
-            h1 { font-size: 3rem; }
-            h2 { font-size: 2.25rem; }
-            .hero-title { font-size: 3rem; }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-toggle {
-                display: block;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                flex-direction: column;
-                padding: var(--space-xl);
-                box-shadow: var(--shadow-xl);
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all var(--transition-normal);
-            }
-            
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-link {
-                padding: var(--space-md);
-                width: 100%;
-                text-align: center;
-            }
-            
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            .hero-title { font-size: 2.5rem; }
-            .hero-actions { flex-direction: column; }
-            .plans-container { grid-template-columns: 1fr; }
-            .plan-card.popular { transform: none; }
-            .plan-card.popular:hover { transform: translateY(-8px); }
-        }
-
+        /* Adjust header height on small devices */
         @media (max-width: 480px) {
             :root {
-                --space-xl: 24px;
-                --space-2xl: 32px;
-                --space-3xl: 48px;
+                --header-height: 110px;
+                --header-top-height: 32px;
             }
-            
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.75rem; }
-            .hero-title { font-size: 2rem; }
-            .price-amount { font-size: 2.5rem; }
+            .logo img {
+                height: 40px;
+            }
+            .header-main {
+                padding: 5px 0;
+            }
         }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* ===== UTILITY CLASSES ===== */
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: var(--space-sm); }
-        .mt-2 { margin-top: var(--space-md); }
-        .mt-3 { margin-top: var(--space-lg); }
-        .mt-4 { margin-top: var(--space-xl); }
-        .mt-5 { margin-top: var(--space-2xl); }
-
-        .mb-1 { margin-bottom: var(--space-sm); }
-        .mb-2 { margin-bottom: var(--space-md); }
-        .mb-3 { margin-bottom: var(--space-lg); }
-        .mb-4 { margin-bottom: var(--space-xl); }
-        .mb-5 { margin-bottom: var(--space-2xl); }
-
-        .p-1 { padding: var(--space-sm); }
-        .p-2 { padding: var(--space-md); }
-        .p-3 { padding: var(--space-lg); }
-        .p-4 { padding: var(--space-xl); }
-        .p-5 { padding: var(--space-2xl); }
-
-        .bg-light { background: var(--light); }
-        .bg-dark { background: var(--dark); color: var(--white); }
-        .bg-gradient { background: var(--gradient-primary); color: var(--white); }
-
-        .rounded-sm { border-radius: var(--radius-sm); }
-        .rounded-md { border-radius: var(--radius-md); }
-        .rounded-lg { border-radius: var(--radius-lg); }
-        .rounded-xl { border-radius: var(--radius-xl); }
-        .rounded-full { border-radius: var(--radius-full); }
-
-        .shadow-sm { box-shadow: var(--shadow-sm); }
-        .shadow-md { box-shadow: var(--shadow-md); }
-        .shadow-lg { box-shadow: var(--shadow-lg); }
-        .shadow-xl { box-shadow: var(--shadow-xl); }
     </style>
 </head>
 <body>
+
     <!-- Header -->
-    <header class="site-header">
-        <div class="header-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">RP</div>
-                Richmond Pharma
-            </a>
-            
-            <button class="mobile-toggle" id="mobileToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav class="nav-menu" id="navMenu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#solutions" class="nav-link">Solutions</a>
-                <a href="#products" class="nav-link">Products</a>
-                <a href="#research" class="nav-link">Research</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </nav>
-            
-            <div class="nav-actions">
-                <a href="#contact" class="btn btn-outline">Contact Us</a>
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-content">
+                    <!-- Top bar content if any -->
+                </div>
             </div>
         </div>
+        <div class="container">
+            <div class="header-main">
+                <div class="logo">
+                    <img src="https://kimi-web-img.moonshot.cn/prod-data/online-image/search-upload/9053c8068cac1760edb540f6dee8c4ae.svg" alt="Richmond Pharmaceuticals" onerror="this.style.display='none'">
+                    <div class="logo-text">
+                        <h1>Richmond Pharmaceuticals</h1>
+                        <span>A Natural Division</span>
+                    </div>
+                </div>
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Natural Division</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="icon-btn"><i class="far fa-heart"></i></button>
+                    <button class="icon-btn cart-btn">
+                        🛒
+                        <span class="cart-count">0</span>
+                    </button>
+                    <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Natural Division</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section" id="home">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">Advancing Medicine Through Innovation</h1>
-                <p class="hero-description">
-                    Richmond Pharmaceutical combines cutting-edge research with compassionate care to develop life-changing treatments for patients worldwide.
-                </p>
-                <div class="hero-actions">
-                    <a href="#solutions" class="btn btn-primary btn-large">Explore Solutions</a>
-                    <a href="#contact" class="btn btn-ghost btn-large">Contact Research Team</a>
-                </div>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <img src="https://kimi-web-img.moonshot.cn/prod-data/online-image/search-upload/9053c8068cac1760edb540f6dee8c4ae.svg" alt="leaf" onerror="this.style.display='none'">
+                <span>100% NATURAL</span>
             </div>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number">25+</span>
-                    <span class="stat-label">Years of Excellence</span>
+            <h2>Nature's Elixir For Wellness</h2>
+            <p>Discover the synergy of science and nature with Richmond Pharmaceuticals - A Natural Division. Elevate your well-being naturally.</p>
+            <a href="#" class="btn-primary">Explore Products</a>
+        </div>
+    </section>
+
+    <!-- Secondary Hero -->
+    <section class="hero-secondary">
+        <div class="container">
+            <div class="hero-secondary-content">
+                <div class="hero-secondary-text">
+                    <div class="badge">
+                        <img src="https://kimi-web-img.moonshot.cn/prod-data/online-image/search-upload/9053c8068cac1760edb540f6dee8c4ae.svg" alt="Logo" onerror="this.style.display='none'">
+                        <span>NUTRACEUTICAL EXCELLENCE</span>
+                    </div>
+                    <h2>Pioneering Nutraceutical Excellence</h2>
+                    <p>Leading the way in nutraceutical innovation, Richmond Pharmaceuticals brings you the finest natural solutions for a healthier, more vibrant life. Our commitment to quality and purity sets us apart in the world of natural health.</p>
+                    <a href="#" class="btn-primary">Learn More</a>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">150+</span>
-                    <span class="stat-label">Clinical Trials</span>
+                <div class="hero-secondary-image" role="img" aria-label="Natural ingredients"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-header">
+                <h3>Featured Products</h3>
+                <p>Discover our range of premium nutraceutical products crafted with nature's finest ingredients</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍯</div>
+                    <div class="product-info">
+                        <div class="product-category">Syrups</div>
+                        <h4 class="product-title">Herbal Wellness Syrup</h4>
+                        <p class="product-description">Natural immune support with traditional herbs</p>
+                        <div class="product-price">₨ 1,299</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">50+</span>
-                    <span class="stat-label">Countries Served</span>
+                <div class="product-card">
+                    <div class="product-image">💊</div>
+                    <div class="product-info">
+                        <div class="product-category">Capsules</div>
+                        <h4 class="product-title">Natural Extract Capsules</h4>
+                        <p class="product-description">Concentrated herbal extracts for daily vitality</p>
+                        <div class="product-price">₨ 1,899</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🌿</div>
+                    <div class="product-info">
+                        <div class="product-category">Sachets</div>
+                        <h4 class="product-title">Herbal Powder Sachets</h4>
+                        <p class="product-description">Convenient on-the-go natural wellness</p>
+                        <div class="product-price">₨ 899</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🧪</div>
+                    <div class="product-info">
+                        <div class="product-category">Tablets</div>
+                        <h4 class="product-title">Nutraceutical Tablets</h4>
+                        <p class="product-description">Advanced formulation for optimal health</p>
+                        <div class="product-price">₨ 2,499</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Solutions Section -->
-    <section class="features-section" id="solutions">
-        <div class="section-header">
-            <span class="section-subtitle">Our Solutions</span>
-            <h2>Comprehensive Pharmaceutical Solutions</h2>
-            <p class="lead">We provide end-to-end pharmaceutical solutions from research to patient care.</p>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card fade-in">
-                <div class="feature-icon">
-                    <i class="fas fa-flask"></i>
-                </div>
-                <h3>Research & Development</h3>
-                <p>Cutting-edge research facilities with focus on oncology, neurology, and rare diseases.</p>
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-header">
+                <h2>Richmond Pharmaceuticals</h2>
+                <h3>- A Natural Division -</h3>
             </div>
-            
-            <div class="feature-card fade-in">
-                <div class="feature-icon">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <h3>Manufacturing Excellence</h3>
-                <p>State-of-the-art GMP certified manufacturing facilities with global distribution networks.</p>
-            </div>
-            
-            <div class="feature-card fade-in">
-                <div class="feature-icon">
-                    <i class="fas fa-heartbeat"></i>
-                </div>
-                <h3>Clinical Support</h3>
-                <p>Comprehensive clinical trial management and patient support programs.</p>
+            <div class="about-content">
+                <p>Welcome to Richmond Pharmaceuticals – A Natural Division, your trusted partner in the world of nutraceutical pharma products. Established in Faisalabad, Pakistan, we take pride in our commitment to providing high-quality, natural solutions that promote health and well-being.</p>
+                <p>We understand the importance of embracing the power of nature to enhance human health. Our journey began with a vision to create a positive impact on people's lives through innovative and effective nutraceutical products. With a dedicated team of professionals, we have evolved into a leading player in the industry, driven by a passion for excellence and a genuine concern for the health of our community.</p>
             </div>
         </div>
     </section>
 
-    <!-- Products Section (Spaceship Style Plans) -->
-    <section class="plans-section" id="products">
-        <div class="section-header">
-            <span class="section-subtitle">Product Portfolio</span>
-            <h2>Specialized Therapeutic Areas</h2>
-            <p class="lead">Our focused therapeutic portfolios designed for specific medical needs.</p>
-        </div>
-        
-        <div class="plans-container">
-            <!-- Essential Plan -->
-            <div class="plan-card">
-                <div class="plan-header">
-                    <h3 class="plan-name">Essential Therapeutics</h3>
-                    <p class="plan-description">For primary care and common conditions</p>
+    <!-- Info Cards -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Who We Are</h3>
+                    <p>Richmond Pharmaceuticals is more than just a pharmaceutical company; we are a team of experts dedicated to harnessing the potential of nature to improve health. Our Natural Division focuses on creating nutraceutical products that blend the best of traditional wisdom with modern scientific advancements. We believe in the synergy between nature and science, striving to offer products that not only meet but exceed expectations.</p>
                 </div>
-                
-                <div class="plan-price">
-                    <span class="original-price">$850</span>
-                    <span class="price-amount">$680</span>
-                    <span class="discount-badge">20% OFF</span>
+                <div class="info-card">
+                    <h3>What We Do</h3>
+                    <p>We specialize in the development, manufacturing, and distribution of nutraceutical pharma products that cater to a wide range of health needs. From dietary supplements to herbal formulations, our diverse product portfolio reflects our commitment to providing natural solutions for a healthier lifestyle. We adhere to the highest industry standards to ensure the safety, efficacy, and quality of our products.</p>
                 </div>
-                
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Antibiotics & Antivirals</li>
-                    <li><i class="fas fa-check"></i> Pain Management</li>
-                    <li><i class="fas fa-check"></i> Cardiovascular</li>
-                    <li><i class="fas fa-check"></i> Respiratory Care</li>
-                    <li><i class="fas fa-check"></i> 24/7 Medical Support</li>
-                </ul>
-                
-                <div class="add-ons">
-                    <div class="add-ons-title">Optional Add-ons</div>
-                    <div class="add-on-item">
-                        <div class="add-on-label">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Enhanced Safety Profile</span>
-                        </div>
-                        <span class="add-on-price">+$120</span>
-                    </div>
-                    <div class="add-on-item">
-                        <div class="add-on-label">
-                            <i class="fas fa-globe"></i>
-                            <span>Global Distribution</span>
-                        </div>
-                        <span class="add-on-price">+$250</span>
-                    </div>
-                </div>
-                
-                <a href="#contact" class="btn btn-primary" style="width: 100%;">Request Information</a>
-                <span class="trial-notice">Volume discounts available for healthcare providers</span>
-            </div>
-            
-            <!-- Pro Plan (Most Popular) -->
-            <div class="plan-card popular">
-                <div class="plan-badge">Most Popular</div>
-                <div class="plan-header">
-                    <h3 class="plan-name">Specialty Care</h3>
-                    <p class="plan-description">For complex and chronic conditions</p>
-                </div>
-                
-                <div class="plan-price">
-                    <span class="original-price">$1,850</span>
-                    <span class="price-amount">$1,295</span>
-                    <span class="discount-badge">30% OFF</span>
-                </div>
-                
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Oncology Therapies</li>
-                    <li><i class="fas fa-check"></i> Neurology Treatments</li>
-                    <li><i class="fas fa-check"></i> Autoimmune Diseases</li>
-                    <li><i class="fas fa-check"></i> Personalized Medicine</li>
-                    <li><i class="fas fa-check"></i> Clinical Trial Access</li>
-                    <li><i class="fas fa-check"></i> Dedicated Medical Team</li>
-                </ul>
-                
-                <div class="add-ons">
-                    <div class="add-ons-title">Optional Add-ons</div>
-                    <div class="add-on-item">
-                        <div class="add-on-label">
-                            <i class="fas fa-dna"></i>
-                            <span>Genetic Testing Integration</span>
-                        </div>
-                        <span class="add-on-price">+$350</span>
-                    </div>
-                    <div class="add-on-item">
-                        <div class="add-on-label">
-                            <i class="fas fa-user-md"></i>
-                            <span>Specialist Consultation</span>
-                        </div>
-                        <span class="add-on-price">+$500</span>
-                    </div>
-                </div>
-                
-                <a href="#contact" class="btn btn-primary" style="width: 100%;">Request Information</a>
-                <span class="trial-notice">Includes priority access to new therapies</span>
-            </div>
-            
-            <!-- Supreme Plan -->
-            <div class="plan-card">
-                <div class="plan-header">
-                    <h3 class="plan-name">Advanced Biologics</h3>
-                    <p class="plan-description">For cutting-edge treatment approaches</p>
-                </div>
-                
-                <div class="plan-price">
-                    <span class="original-price">$3,500</span>
-                    <span class="price-amount">$2,450</span>
-                    <span class="discount-badge">30% OFF</span>
-                </div>
-                
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Monoclonal Antibodies</li>
-                    <li><i class="fas fa-check"></i> Gene Therapies</li>
-                    <li><i class="fas fa-check"></i> Cell-Based Therapies</li>
-                    <li><i class="fas fa-check"></i> Rare Disease Focus</li>
-                    <li><i class="fas fa-check"></i> Real-World Evidence</li>
-                    <li><i class="fas fa-check"></i> Global Regulatory Support</li>
-                    <li><i class="fas fa-check"></i> Dedicated Research Partnership</li>
-                </ul>
-                
-                <div class="add-ons">
-                    <div class="add-ons-title">Optional Add-ons</div>
-                    <div class="add-on-item">
-                        <div class="add-on-label">
-                            <i class="fas fa-vial"></i>
-                            <span>Custom Formulation</span>
-                        </div>
-                        <span class="add-on-price">+$750</span>
-                    </div>
-                    <div class="add-on-item">
-                        <div class="add-on-label">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Outcomes Analytics</span>
-                        </div>
-                        <span class="add-on-price">+$600</span>
-                    </div>
-                </div>
-                
-                <a href="#contact" class="btn btn-primary" style="width: 100%;">Request Information</a>
-                <span class="trial-notice">Customized solutions for healthcare institutions</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Medicine Showcase -->
-    <section class="features-section">
-        <div class="section-header">
-            <span class="section-subtitle">Featured Products</span>
-            <h2>Innovative Medicine Portfolio</h2>
-            <p class="lead">Our breakthrough medicines making a difference in patients' lives.</p>
-        </div>
-        
-        <div class="medicine-grid">
-            <div class="medicine-card">
-                <div class="medicine-image">
-                    <i class="fas fa-capsules"></i>
-                </div>
-                <div class="medicine-content">
-                    <span class="medicine-category">Oncology</span>
-                    <h3>OncoResponse™</h3>
-                    <p>Targeted therapy for advanced solid tumors with precision medicine approach.</p>
-                    <a href="#contact" class="btn btn-outline" style="margin-top: var(--space-md);">Learn More</a>
-                </div>
-            </div>
-            
-            <div class="medicine-card">
-                <div class="medicine-image">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <div class="medicine-content">
-                    <span class="medicine-category">Neurology</span>
-                    <h3>NeuroGuard®</h3>
-                    <p>Breakthrough treatment for neurodegenerative diseases with improved outcomes.</p>
-                    <a href="#contact" class="btn btn-outline" style="margin-top: var(--space-md);">Learn More</a>
-                </div>
-            </div>
-            
-            <div class="medicine-card">
-                <div class="medicine-image">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="medicine-content">
-                    <span class="medicine-category">Cardiology</span>
-                    <h3>CardioBalance™</h3>
-                    <p>Advanced cardiovascular protection with minimal side effects for long-term use.</p>
-                    <a href="#contact" class="btn btn-outline" style="margin-top: var(--space-md);">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Research Section -->
-    <section class="research-section" id="research">
-        <div class="section-header">
-            <span class="section-subtitle">Our Research</span>
-            <h2>Pioneering Medical Research</h2>
-            <p class="lead">Driving innovation through dedicated research and clinical excellence.</p>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-microscope"></i>
-                </div>
-                <h3>Basic Research</h3>
-                <p>Fundamental discovery research exploring new biological pathways and mechanisms.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-clipboard-check"></i>
-                </div>
-                <h3>Clinical Development</h3>
-                <p>Rigorous clinical trials ensuring safety, efficacy, and quality of new treatments.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-handshake"></i>
-                </div>
-                <h3>Strategic Partnerships</h3>
-                <p>Collaborations with academic institutions and research organizations worldwide.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="site-footer" id="contact">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>Richmond Pharmaceutical</h4>
-                <p>Advancing medicine through innovative research and compassionate care since 1998.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Richmond Pharmaceuticals</h4>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.9rem;">Your trusted partner in natural health solutions. Committed to quality, purity, and your well-being.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">Syrups</a></li>
+                        <li><a href="#">Capsules</a></li>
+                        <li><a href="#">Sachets</a></li>
+                        <li><a href="#">Tablets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Faisalabad, Pakistan</li>
+                        <li>info@richmondpharma.com</li>
+                        <li>+92-XXX-XXXXXXX</li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#solutions">Our Solutions</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#research">Research</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>Copyright © 2023 - Richmond Pharmaceuticals. | All Rights Reserved.</p>
             </div>
-            
-            <div class="footer-column">
-                <h4>Contact Info</h4>
-                <ul class="footer-links">
-                    <li><i class="fas fa-map-marker-alt"></i> 123 Research Drive, Boston, MA</li>
-                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                    <li><i class="fas fa-envelope"></i> info@richmondpharma.com</li>
-                    <li><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM EST</li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h4>Subscribe to Updates</h4>
-                <p>Stay informed about our latest research and product developments.</p>
-                <div style="margin-top: var(--space-lg);">
-                    <input type="email" placeholder="Your email address" style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid var(--gray); background: rgba(255,255,255,0.1); color: var(--white);">
-                    <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-sm);">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2023 Richmond Pharmaceutical. All rights reserved. | <a href="#" style="color: var(--gray-light);">Privacy Policy</a> | <a href="#" style="color: var(--gray-light);">Terms of Service</a></p>
         </div>
     </footer>
 
     <script>
-        // Mobile Navigation Toggle
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        mobileToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            mobileToggle.innerHTML = navMenu.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        menuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
-        
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-link').forEach(link => {
+
+        // Close menu when clicking a link
+        mobileNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileNav.classList.remove('active');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
             });
         });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerHeight = document.querySelector('.site-header').offsetHeight;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+
+        // Close menu on window resize (if open and becomes desktop)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 992) {
+                mobileNav.classList.remove('active');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
                 }
-            });
-        });
-        
-        // Add fade-in animation to cards when they come into view
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all feature and medicine cards
-        document.querySelectorAll('.feature-card, .medicine-card, .plan-card').forEach(card => {
-            observer.observe(card);
-        });
-        
-        // Update year in footer
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearSpan = document.querySelector('footer .footer-bottom p');
-            if (yearSpan) {
-                yearSpan.innerHTML = yearSpan.innerHTML.replace('2023', new Date().getFullYear());
             }
         });
     </script>
-
-<script src="launcher.js"></script>
-
+  
+      
+   <script src="launcher.js"></script>
+    
 </body>
 </html>
